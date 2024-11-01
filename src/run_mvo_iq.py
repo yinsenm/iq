@@ -31,7 +31,7 @@ dict_cov_funcs = {}
 # add iq methods with selected parameters
 dict_cov_funcs["IQ1"] = {
     "cov_function": IQ, "cov_params": {
-        "center_method": "median",
+        "center_method": "median", "scale_method": "vols_max",
         "dCplus": 2, "dCminus": 2, "dDplus": 2, "dDminus": 2,
         "eta": 0.1, "gamma": 0.075
     }
@@ -40,7 +40,7 @@ dict_cov_funcs["IQ1"] = {
 
 dict_cov_funcs["IQ2"] = {
         "cov_function": IQ, "cov_params": {
-        "center_method": "median",
+        "center_method": "median", "scale_method": "vols_max",
         "dCplus": 2, "dCminus": 2, "dDplus": 2, "dDminus": 2,
         "eta": 0.1, "gamma": 0
     }
@@ -244,19 +244,11 @@ def run_covs(dict_cov_funcs: dict, filename: str, verbose: bool = False):
 if __name__ == "__main__":
     # run portfolio optimization using the selected covariance matrix estimators
     for idx, dict_cov_func in enumerate(list_cov_funcs):
-        cov_name = list(dict_cov_func.keys())[0]
-        output_file = "%s/portfolio/metrics/%s.csv" % (
-            savepath,
-            cov_name
-        ) # if the file exits, then skip it
-        if os.path.isfile(output_file):
-            continue
         run_covs(dict_cov_funcs=dict_cov_func, filename=filename, verbose=True)
 
     # aggregate and plot the portfolio performance
     input_folder = f"{savepath}/portfolio/metrics/"
     csv_files = glob("%s/*.csv" % input_folder)
-    print(csv_files)
     df_performance = pd.concat([pd.read_csv(csv_file, index_col=0) for csv_file in csv_files], axis=1)
 
     list_performs = []
