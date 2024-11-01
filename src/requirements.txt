@@ -1,0 +1,9 @@
+pandas
+numpy
+scipy
+tqdm
+matplotlib
+pandas-datareader
+joblib
+plotly
+kaleido

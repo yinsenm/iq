@@ -1,0 +1,6 @@
+/data
+/results
+.DS_Store
+/.idea
+/src/debug.log
+__pycache__/
